@@ -4,7 +4,7 @@
 ```python
 from sklearn.model_selection import GridSearchCV
 from sklearn.neighbors import KNeighborsRegressor
-reg_test = GridSearchCV(KNeighborsRegressor(),param_grid={"n_neighbors":np.arange(3,50)})
+reg_test = GridSearchCV(KNeighborsRegressor(),param_grid={"n_neighbors":np.arange(3,50)},cv = 5,scoring = "accuracy")
 # Fit will test all of the combinations
 reg_test.fit(X,y)
 ```
@@ -62,6 +62,8 @@ clf.fit(X,y)
 ```
 
 ### k nearest neighbor
+parameters:
+- n_neighbors
 ```python
 # Import Library
 from sklearn.neighbors import KNeighborsClassifier
@@ -72,6 +74,14 @@ clfk.fit(X,y)
 ```
 
 ### SVM
+Parameters:
+- C: Sum of Error Margins
+- kernel:
+  - linear: line of separation
+  - rbf: circle of separation
+    - Additional param gamma: Inverse of the radius
+  - poly: curved line of separation
+    - Additional param degree: Degree of the polynome
 ```python
 # Import Library
 from sklearn.svm import SVC
@@ -81,6 +91,9 @@ clfsvm = SVC(kernel = "linear",C = 10)
 clfsvm.fit(X,y)
 ```
 ### Decision Tree
+parameters:
+- Max_depth: Number of Splits
+- Min_samples_leaf: Minimum number of observations per leaf
 ```python
 # Import library
 from sklearn.tree import DecisionTreeClassifier
