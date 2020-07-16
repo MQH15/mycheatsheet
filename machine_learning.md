@@ -4,10 +4,27 @@
 ```python
 from sklearn.model_selection import GridSearchCV
 from sklearn.neighbors import KNeighborsRegressor
-reg_test = GridSearchCV(KNeighborsRegressor(),param_grid={"n_neighbors":np.arange(3,50)},cv = 5,scoring = "accuracy")
+neigh_reg = GridSearchCV(KNeighborsRegressor(),param_grid={"n_neighbors":np.arange(3,50)},cv = 10,scoring = "mean_squared_error",n_jobs=-1)
 # Fit will test all of the combinations
-reg_test.fit(X,y)
+neigh_reg.fit(X,y)
+# Best estimator and best parameters
+neigh_reg.best_estimator_
+neigh_reg.best_params_
+neigh_reg.best_score_
 ```
+
+```python
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.model_selection import GridSearchCV
+dcstree_clf = GridSearchCV(DecisionTreeClassifier(),param_grid={"max_depth":range(1,20),"min_samples_leaf":range(20,100),"min_samples_split":range(20,50)},cv = 10,scoring = "f1_weighted",n_jobs=-1,return_train_score=True)
+# Fit will test all of the combinations
+dcstree_clf.fit(X,y)
+# Best estimator and best parameters
+dcstree_clf.best_estimator_
+dcstree_clf.best_params_
+dcstree_clf.best_score_
+```
+
 
 ## Regression
 
