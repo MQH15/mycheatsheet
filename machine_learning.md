@@ -25,6 +25,30 @@ dcstree_clf.best_params_
 dcstree_clf.best_score_
 ```
 
+## RandomizedSearch
+```python
+from sklearn.tree import DecisionTreeRegressor
+from sklearn.model_selection import RandomizedSearchCV
+rgstree_reg = RandomizedSearchCV(DecisionTreeRegressor(),param_distributions={"max_depth":range(1,20),"min_samples_leaf":range(20,100),"min_samples_split":range(20,50)},cv = 10,scoring = "mean_squared_error",n_jobs=-1)
+# Fit will test all of the combinations
+rgstree_reg.fit(X,y)
+# Best estimator and best parameters
+rgstree_reg.best_estimator_
+rgstree_reg.best_params_
+rgstree_reg.best_score_
+```
+
+```python
+from sklearn.svm import SVC
+from sklearn.model_selection import RandomizedSearchCV
+svc_clf = RandomizedSearchCV(SVC(),param_grid={"kernel":["linear","rbf"],"C":range(1,10000,1000)},cv = 10,scoring = "f1_weighted",n_jobs=-1,return_train_score=True)
+# Fit will test all of the combinations
+svc_clf.fit(X,y)
+# Best estimator and best parameters
+svc_clf.best_estimator_
+svc_clf.best_params_
+svc_clf.best_score_
+```
 
 ## Regression
 
