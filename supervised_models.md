@@ -50,6 +50,14 @@ dcstree_clf.best_params_
 dcstree_clf.best_score_
 ```
 
+```python
+# results of GridSearch
+cvres = dcstree_clf.cv_results_
+for mean_score, params in zip(cvres["mean_test_score"], cvres["params"]):
+    print("F1 score:", mean_score, "-", "Parámetros:", params)
+```
+
+
 ## RandomizedSearch
 ```python
 from sklearn.tree import DecisionTreeRegressor
@@ -293,4 +301,39 @@ svc_clf = SVC(kernel="Linear",C=50)
 svc_clf.fit(X_train,y_train)
 # Do predictions
 svc_clf.predict(X_test)
+```
+
+### Bayesian models
+parameters:
+- alpha:
+```python
+from sklearn.naive_bayes import BernoulliNB
+# Create an instance of the model
+bernoNB_clf = BernoulliNB(alpha=1.0e-10)
+# Fit the data
+bernoNB_clf.fit(X_train,y_train)
+# Do predictions
+bernoNB_clf.predict(X_test)
+```
+
+parameters:
+```python
+from sklearn.naive_bayes import GaussianNB
+# Create an instance of the model
+gaussNB_clf = GaussianNB()
+# Fit the data
+gaussNB_clf.fit(X_train,y_train)
+# Do predictions
+gaussNB_clf.predict(X_test)
+```
+
+parameters:
+```python
+from sklearn.naive_bayes import MultinomialNB
+# Create an instance of the model
+multNB_clf = MultinomialNB()
+# Fit the data
+multNB_clf.fit(X_train,y_train)
+# Do predictions
+multNB_clf.predict(X_test)
 ```
