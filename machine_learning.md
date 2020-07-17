@@ -53,15 +53,17 @@ svc_clf.best_score_
 ## Regression Algorithms
 
 ### Linear Regression with stastmodel
+parameters:
+- β0,β1,β2,...,βn
 ```python
 # Load the library
-import statsmodels.formula.api as smf
+import statsmodels.api as sm
 # Create an instance of the model
-linearstat_reg = smf.ols(formula="Sales~TV+Radio", data = datatraining).fit()
+linearstat_reg = sm.OLS(y_train,X_train).fit()
 # results
-linearstat_reg.summary()
+print(linearstat_reg.summary())
 # Do predictions
-linearstat_reg.predict(datatesting)
+linearstat_reg.predict(X_test)
 ```
 
 ### Linear Regression with sklearn
@@ -126,10 +128,29 @@ gbm_reg.fit(X_train,y_train)
 gbm_reg.predict(X_test)
 ```
 
-### Support Vector
+### Tree Forest
 parameters:
-- kernel: flat type
-- C: number of points in the margin
+- n_estimators: number of trees
+- max_depth: tree depth
+- min_samples_leaf: Minimum number of observations per leaf
+```python
+from sklearn.ensemble import RandomForestRegressor
+# Create an instance of the model
+rndf_reg = RandomForestRegressor(max_depth=4,n_estimators=100)
+# Fit the data
+rndf_reg.fit(X_train,y_train)
+# Do predictions
+rndf_reg.predict(X_test)
+```
+
+### SVR
+- C: Sum of Error Margins
+- kernel:
+  - linear: line of separation
+  - rbf: circle of separation
+    - Additional param gamma: Inverse of the radius
+  - poly: curved line of separation
+    - Additional param degree: Degree of the polynome
 ```python
 from sklearn.svm import SVR
 # Create an instance of the model
@@ -140,16 +161,34 @@ svr_reg.fit(X_train,y_train)
 svr_reg.predict(X_test)
 ```
 
-## Clasification
+## Clasification Algorithms
 
-### Logistic Regression
+### Logistic Regression with stastmodel
+parameters:
+- β0,β1,β2,...,βn
+```python
+# Load the library
+import statsmodels.api as sm
+# Create an instance of the model
+logitstat_clf = sm.Logit(y_train,X_train).fit()
+# results
+print(logitstat_clf.summary2())
+# Do predictions
+logitstat_clf.predict(X_test)
+```
+
+### Logistic Regression with sklearn
+parameters:
+- β0,β1,β2,...,βn
 ```python
 # Load the library
 from sklearn.linear_model import LogisticRegression
-# Create an instance of the classifier
-clf = LogisticRegression()
+# Create an instance of the model
+logitskl_clf = LogisticRegression()
 # Fit the data
-clf.fit(X,y)
+logitskl_clf.fit(X_train,y_train)
+# Do predictions
+logitskl_clf.predict(X_test)
 ```
 
 ### k nearest neighbor
@@ -158,13 +197,61 @@ parameters:
 ```python
 # Import Library
 from sklearn.neighbors import KNeighborsClassifier
-# Create instance
-clfk = KNeighborsClassifier(n_neighbors = 5)
-# Fit
-clfk.fit(X,y)
+# Create an instance of the model
+knn_clf = KNeighborsClassifier(n_neighbors = 10)
+# Fit the data
+knn_clf.fit(X,y)
+# Do predictions
+knn_clf.predict(X_test)
 ```
 
-### SVM
+### Decision Tree
+parameters:
+- Max_depth: Number of Splits
+- Min_samples_leaf: Minimum number of observations per leaf
+```python
+# Import library
+from sklearn.tree import DecisionTreeClassifier
+# Create an instance of the model
+dcstree_clf = DecisionTreeClassifier(min_samples_leaf=20,max_depth=3)
+# Fit the data
+dcstree_clf.fit(X,y)
+# Do predictions
+dcstree_clf.predict(X_test)
+```
+
+### Gradient Boosted Trees
+parameters:
+- n_estimators: number of trees
+- learning_rate: steps levels
+- max_depth: tree depth
+- min_samples_leaf: Minimum number of observations per leaf
+```python
+from sklearn.ensemble import GradientBoostingClassifier
+# Create an instance of the model
+gbm_clf = GradientBoostingClassifier(max_depth=4,n_estimators=100, learning_rate=0.1)
+# Fit the data
+gbm_clf.fit(X_train,y_train)
+# Do predictions
+gbm_clf.predict(X_test)
+```
+
+### Tree Forest
+parameters:
+- n_estimators: number of trees
+- max_depth: tree depth
+- min_samples_leaf: Minimum number of observations per leaf
+```python
+from sklearn.ensemble import RandomForestClassifier
+# Create an instance of the model
+rndf_clf = RandomForestClassifier(max_depth=4,n_estimators=100)
+# Fit the data
+rndf_clf.fit(X_train,y_train)
+# Do predictions
+rndf_clf.predict(X_test)
+```
+
+### SVC
 Parameters:
 - C: Sum of Error Margins
 - kernel:
@@ -174,22 +261,11 @@ Parameters:
   - poly: curved line of separation
     - Additional param degree: Degree of the polynome
 ```python
-# Import Library
 from sklearn.svm import SVC
-# Create instance
-clfsvm = SVC(kernel = "linear",C = 10)
-# Fit
-clfsvm.fit(X,y)
-```
-### Decision Tree
-parameters:
-- Max_depth: Number of Splits
-- Min_samples_leaf: Minimum number of observations per leaf
-```python
-# Import library
-from sklearn.tree import DecisionTreeClassifier
-# Create instance
-clfd = DecisionTreeClassifier(min_samples_leaf=20,max_depth=3)
+# Create an instance of the model
+svc_clf = SVC(kernel="Linear",C=50)
 # Fit the data
-clfd.fit(X,y)
+svc_clf.fit(X_train,y_train)
+# Do predictions
+svc_clf.predict(X_test)
 ```
