@@ -25,6 +25,7 @@ def remove_labels(df, label_name):
     return (X, y)
 ```
 
+
 ## GridSearch
 ```python
 from sklearn.model_selection import GridSearchCV
@@ -82,6 +83,24 @@ svc_clf.best_estimator_
 svc_clf.best_params_
 svc_clf.best_score_
 ```
+
+
+## Cross Validation
+
+```python
+from sklearn.cross_validation import KFold
+from sklearn.model_selection import cross_val_score
+cv = KFold(n = X.shape[0], n_folds=10, shuffle=True, random_state=42)
+cross_val_score(SVR(),X,y,cv=cv,scoring="mean_squared_error").mean()
+```
+
+```python
+from sklearn.cross_validation import KFold
+from sklearn.model_selection import cross_val_score
+cv = KFold(n = X.shape[0], n_folds=10, shuffle=True, random_state=42)
+cross_val_score(SVC(),X,y,cv=cv,scoring="f1_weighted").mean()
+```
+
 
 ## Regression Algorithms
 
@@ -193,6 +212,7 @@ svr_reg.fit(X_train,y_train)
 # Do predictions
 svr_reg.predict(X_test)
 ```
+
 
 ## Clasification Algorithms
 
@@ -337,3 +357,87 @@ multNB_clf.fit(X_train,y_train)
 # Do predictions
 multNB_clf.predict(X_test)
 ```
+
+
+## Metrics
+
+### Regression Metrics:
+- Mean Absolute Error MAE
+```python
+from sklearn.metrics import mean_absolute_error
+mean_absolute_error(y_test,y_pred)
+```
+
+- Mean Absolute Percentage Error MAPE
+```python
+def mean_absolute_percentage_error(y_true, y_pred):
+    return np.mean(np.abs((y_test - y_pred) / y_true)) * 100
+```
+
+- Mean Squared Error MSE
+```python
+from sklearn.metrics import mean_squared_error
+mean_squared_error(y_test,y_pred)
+```
+
+- Root Mean Squared Error RMSE
+```python
+import numpy as np
+from sklearn.metrics import mean_squared_error
+np.sqrt(mean_squared_error(y_test,y_pred))
+```
+
+- R2 Score
+```python
+from sklearn.metrics import r2_score
+r2_score(y_test,y_pred)
+```
+
+### Classification Metrics:
+- Accuracy
+```python
+from sklearn.metrics import accuracy_score
+accuracy_score(y_test,y_pred)
+```
+
+- Confusion Matrix
+```python
+from sklearn.metrics import confusion_matrix
+confusion_matrix(y_test,y_pred)
+```
+
+```python
+from sklearn.metrics import confusion_matrix
+import seaborn as sns
+ax = sns.heatmap(confusion_matrix(y_test,y_pred) , annot=True, fmt="d",cmap="YlGnBu")
+ax.set(xlabel='Predicted Values', ylabel='Actual Values',title='Confusion Matrix')
+```
+
+- Classification Reports
+```python
+from sklearn.metrics import classification_report
+print(classification_report(y_test,y_pred))
+```
+
+- Precision
+```python
+from sklearn.metrics import precision_score
+precision_score(y_val, y_pred, pos_label='si')
+```
+
+- Recall
+```python
+from sklearn.metrics import recall_score
+recall_score(y_val, y_pred, pos_label='si')
+```
+
+- f1 score
+```python
+from sklearn.metrics import f1_score
+f1_score(y_val, y_pred, pos_label='si')
+```
+
+- roc curve
+
+- auc
+
